@@ -37,25 +37,23 @@ void setup() {
   Serial.print(WiFi.localIP());
 }
 
+
 void loop() {
-  
-  if(WiFi.status()== WL_CONNECTED){
-      
+  for(i=0;i<8;i++){
+      //LED States set before PUT
       digitalWrite(led1,ledstate[i][0]);
       digitalWrite(led2,ledstate[i][1]);
       digitalWrite(led3,ledstate[i][2]);
-      if(i<7){i++;}
-      else{i=0;}
-    
+  
+  //PUT Request
+  if(WiFi.status()== WL_CONNECTED){   
     HTTPClient http;
-    
     String http_response;
-
-
     String route = endpoint;
     http.begin(route);
     http.addHeader("X-API-Key", API_KEY);
     http.addHeader("Content-Type", "application/json");
+    
     StaticJsonDocument<1024> doc; // Empty JSONDocument
     String httpRequestData; // Emtpy string to be used to store HTTP request data string
 
@@ -72,7 +70,8 @@ void loop() {
         Serial.print(httpResponseCode);
         http_response = http.getString();
         Serial.println(http_response);}
-      else {
+
+    else {
         Serial.print("Error: ");
         Serial.println(httpResponseCode);}
       
@@ -89,5 +88,8 @@ void loop() {
       Serial.println("Lights Switched Successfully");
       delay(2000);   
   }
-  else {return;}
+  else {Serial.println("Not Connected");}
+
+  }
+  
 }
