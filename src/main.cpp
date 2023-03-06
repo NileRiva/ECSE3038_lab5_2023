@@ -4,7 +4,7 @@
 #include <ArduinoJson.h>
 #include "env.h"
 
-const char* endpoint ="https://ecse-three-led-api-v2.onrender.com/api/state" ;
+const char* endpoint = API_URL;
 
 
 const int led1 = 15;
@@ -40,6 +40,13 @@ void setup() {
 void loop() {
   
   if(WiFi.status()== WL_CONNECTED){
+      
+      digitalWrite(led1,ledstate[i][0]);
+      digitalWrite(led2,ledstate[i][1]);
+      digitalWrite(led3,ledstate[i][2]);
+      if(i<7){i++;}
+      else{i=0;}
+    
     HTTPClient http;
     
     String http_response;
@@ -71,13 +78,7 @@ void loop() {
       
       http.end();
       
-      
-      digitalWrite(led1,ledstate[i][0]);
-      digitalWrite(led2,ledstate[i][1]);
-      digitalWrite(led3,ledstate[i][2]);
-      if(i<7){i++;}
-      else{i=0;}
-  
+      //Serial Checks
       Serial.println("Light 1:");
       Serial.println(ledstate[i][0]);
       Serial.println("Light 2:");
