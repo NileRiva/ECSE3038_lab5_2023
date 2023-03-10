@@ -85,7 +85,7 @@ void loop() {
       Serial.println("Light 3:");
       Serial.println(ledstate[i][2]);
       
-      Serial.println("Lights Switched Successfully");
+      Serial.println("Lights Switched Successfully!");
       delay(2000);   
   }
   else {Serial.println("Not Connected");}
